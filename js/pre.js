@@ -1,2 +1,1 @@
-Module = window.Module || {};
-Module.ENVIRONMENT = 'WEB';
+Module['ENVIRONMENT'] = 'WEB';

@@ -1,6 +1,6 @@
 #@copyright Ophir LOJKINE
 
-Module['onRuntimeInitialized'] = () =>
+Module['onRuntimeInitialized'] = () ->
     apiTemp = stackAlloc(4)
 
     ### Represents an prepared statement.
@@ -537,9 +537,6 @@ Module['onRuntimeInitialized'] = () =>
     sqlite3_result_text = Module['cwrap'] 'sqlite3_result_text', '', ['number', 'string', 'number', 'number']
     RegisterExtensionFunctions = Module['cwrap'] 'RegisterExtensionFunctions', 'number', ['number']
 
-    api = { 'Database': Database }
+    Module['SQL'] = { 'Database': Database }
 
-    _SQL = this['SQL']
-    this['SQL'] = api
-
-    if typeof _SQL['ready'] is 'function' then _SQL['ready']()
+this['SQL'] = Module

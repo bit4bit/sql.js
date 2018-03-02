@@ -11,19 +11,19 @@ js/sql-wasm.js: js/sql-optimized-wasm.js
 	cp $^ $@
 
 # RESERVED_FUNCTION_POINTERS setting is used for registering custom functions
-debug-wasm: EMFLAGS= -O1 -g -s INLINING_LIMIT=10 -s RESERVED_FUNCTION_POINTERS=64 -s WASM=1 -s "BINARYEN_METHOD='native-wasm'"
+debug-wasm: EMFLAGS= -O1 -g -s INLINING_LIMIT=10 -s RESERVED_FUNCTION_POINTERS=64 -s WASM=1 -s "BINARYEN_METHOD='native-wasm'" -s MODULARIZE=1 -s "EXPORT_NAME='SQL'"
 debug-wasm: js/sql-debug-wasm.js
 
-optimized-wasm: EMFLAGS= --memory-init-file 0 --closure 1 -Oz -s INLINING_LIMIT=50 -s RESERVED_FUNCTION_POINTERS=64 -s WASM=1 -s "BINARYEN_METHOD='native-wasm'"
+optimized-wasm: EMFLAGS= --memory-init-file 0 --closure 1 -Oz -s INLINING_LIMIT=50 -s RESERVED_FUNCTION_POINTERS=64 -s WASM=1 -s "BINARYEN_METHOD='native-wasm'" -s MODULARIZE=1 -s "EXPORT_NAME='SQL'"
 optimized-wasm: js/sql-optimized-wasm.js
 
-optimized: EMFLAGS= --memory-init-file 0 --closure 1 -Oz -s INLINING_LIMIT=50 -s RESERVED_FUNCTION_POINTERS=64
+optimized: EMFLAGS= --memory-init-file 0 --closure 1 -Oz -s INLINING_LIMIT=50 -s RESERVED_FUNCTION_POINTERS=64 -s MODULARIZE=1 -s "EXPORT_NAME='SQL'"
 optimized: js/sql-optimized.js
 
-debug: EMFLAGS= -O1 -g -s INLINING_LIMIT=10 -s RESERVED_FUNCTION_POINTERS=64
+debug: EMFLAGS= -O1 -g -s INLINING_LIMIT=10 -s RESERVED_FUNCTION_POINTERS=64 -s MODULARIZE=1 -s "EXPORT_NAME='SQL'"
 debug: js/sql-debug.js
 
-js/sql%.js: js/shell-pre.js js/sql%-raw.js js/shell-post.js
+js/sql%.js: js/sql%-raw.js
 	cat $^ > $@
 
 js/sql%-raw.js: c/sqlite3.bc c/extension-functions.bc js/api.js exported_functions
