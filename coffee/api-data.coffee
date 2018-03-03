@@ -1,4 +1,5 @@
 # Global constants
+Module['ENVIRONMENT'] = 'WEB';
 NULL = 0 # Null pointer
 
 SQLite = {}

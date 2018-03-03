@@ -538,5 +538,3 @@ Module['onRuntimeInitialized'] = () ->
     RegisterExtensionFunctions = Module['cwrap'] 'RegisterExtensionFunctions', 'number', ['number']
 
     Module['SQL'] = { 'Database': Database }
-
-this['SQL'] = Module

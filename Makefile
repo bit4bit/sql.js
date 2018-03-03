@@ -27,7 +27,7 @@ js/sql%.js: js/sql%-raw.js
 	cat $^ > $@
 
 js/sql%-raw.js: c/sqlite3.bc c/extension-functions.bc js/api.js exported_functions
-	$(EMCC) $(EMFLAGS) -s EXPORTED_FUNCTIONS=@exported_functions -s EXTRA_EXPORTED_RUNTIME_METHODS=@exported_runtime_methods c/extension-functions.bc c/sqlite3.bc --post-js js/api.js --pre-js js/pre.js -o $@ ;\
+	$(EMCC) $(EMFLAGS) -s EXPORTED_FUNCTIONS=@exported_functions -s EXTRA_EXPORTED_RUNTIME_METHODS=@exported_runtime_methods c/extension-functions.bc c/sqlite3.bc --pre-js js/api.js --post-js js/post.js -o $@ ;\
 
 js/api.js: coffee/api-data.coffee coffee/api.coffee
 	cat $^ | coffee --bare --compile --stdio > $@
